@@ -1,0 +1,82 @@
+﻿<Window x:Class="Factory.AddEdit_Model"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Factory"
+        mc:Ignorable="d"
+        Title="AddEdit_Model"        
+        x:Name="addEditModel"
+        Height="300" Width="450"
+        WindowStartupLocation="CenterScreen"
+        Icon="/Resources/icon_clothe.ico">
+    <Grid Height="250" Width="450">
+        <StackPanel Height="80" Width="425"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock 
+                    Text="Товар:"
+                    Height="25" Width="130"
+                    FontSize="14"
+                    FontWeight="Bold"/>
+                <ComboBox
+                    x:Name="cBox_product"
+                    Height="25" Width="290"
+                    VerticalContentAlignment="Center"
+                    SelectedValue="{Binding id_product}"
+                    SelectedValuePath="id_product"
+                    FontSize="12"
+                    Margin="5,0,0,0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding name_product}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock 
+                    Text="Название модели:"
+                    HorizontalAlignment="Left"
+                    Height="25" Width="130"
+                    FontSize="14"
+                    FontWeight="Bold"/>
+                <TextBox
+                    x:Name="tbox_nameModel"
+                    Text="{Binding name_model}"
+                    Height="25" Width="290"
+                    VerticalContentAlignment="Center"
+                    FontSize="12"
+                    Margin="5,0,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock 
+                    Text="Цена:"
+                    HorizontalAlignment="Left"
+                    Height="25" Width="130"
+                    FontSize="14"
+                    FontWeight="Bold"/>
+                <TextBox
+                    x:Name="tbox_price"
+                    Text="{Binding price_model}"
+                    Height="25" Width="290"
+                    VerticalContentAlignment="Center"
+                    FontSize="12"
+                    Margin="5,0,0,0"/>
+            </StackPanel>
+        </StackPanel>
+        <Button 
+            x:Name="Btn_save"
+            Template="{DynamicResource ButtonTemplateCircle}"
+            Content="Сохранить"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
+            Margin="0,0,0,0"
+            Height="44" Width="200"
+            Foreground="White"
+            Background="#FF0FC61A"
+            FontSize="16"
+            Click="Btn_save_Click"/>
+    </Grid>
+</Window>

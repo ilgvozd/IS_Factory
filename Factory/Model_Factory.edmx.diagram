@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="356a91510f0d4432892b07631f89c572" Name="Diagram1">
+        <EntityTypeShape EntityType="FactoryModel.Category_product" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FactoryModel.Employee" Width="1.5" PointX="9.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="FactoryModel.Model_clothes" Width="1.5" PointX="5.25" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FactoryModel.Receipt" Width="1.5" PointX="7.5" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FactoryModel.sysdiagrams" Width="1.5" PointX="4.125" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FactoryModel.Type_product" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="FactoryModel.FK_Type_product_Category_product" ManuallyRouted="false" />
+        <AssociationConnector Association="FactoryModel.FK_Model_clothes_Type_product" ManuallyRouted="false" />
+        <AssociationConnector Association="FactoryModel.FK_Receipt_Model_clothes" ManuallyRouted="false" />
+        <AssociationConnector Association="FactoryModel.FK_Receipt_Employee" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

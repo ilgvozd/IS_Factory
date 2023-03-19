@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище FactoryModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Category_product">
+    <Key>
+      <PropertyRef Name="id_category" />
+    </Key>
+    <Property Name="id_category" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name_category" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="id_employee" />
+    </Key>
+    <Property Name="id_employee" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="surname_employee" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="name_employee" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="patronymic_employee" Type="varchar" MaxLength="35" Nullable="false" />
+    <Property Name="date_birthday" Type="date" Nullable="false" />
+    <Property Name="number_phone" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="email" Type="varchar" MaxLength="35" Nullable="false" />
+    <Property Name="login_user" Type="varchar" MaxLength="35" Nullable="false" />
+    <Property Name="password_user" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="post" Type="varchar" MaxLength="35" Nullable="false" />
+    <Property Name="image_" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Model_clothes">
+    <Key>
+      <PropertyRef Name="id_model" />
+    </Key>
+    <Property Name="id_model" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_product" Type="int" Nullable="false" />
+    <Property Name="name_model" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="price_model" Type="varchar" MaxLength="60" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Receipt">
+    <Key>
+      <PropertyRef Name="id_receipt" />
+    </Key>
+    <Property Name="id_receipt" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_model" Type="int" Nullable="false" />
+    <Property Name="id_employee" Type="int" Nullable="false" />
+    <Property Name="date_receipt" Type="date" Nullable="false" />
+    <Property Name="amount" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Type_product">
+    <Key>
+      <PropertyRef Name="id_product" />
+    </Key>
+    <Property Name="id_product" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_category" Type="int" Nullable="false" />
+    <Property Name="name_product" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Model_clothes_Type_product">
+    <End Role="Type_product" Type="Self.Type_product" Multiplicity="1" />
+    <End Role="Model_clothes" Type="Self.Model_clothes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Type_product">
+        <PropertyRef Name="id_product" />
+      </Principal>
+      <Dependent Role="Model_clothes">
+        <PropertyRef Name="id_product" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Receipt_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="Receipt" Type="Self.Receipt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="id_employee" />
+      </Principal>
+      <Dependent Role="Receipt">
+        <PropertyRef Name="id_employee" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Receipt_Model_clothes">
+    <End Role="Model_clothes" Type="Self.Model_clothes" Multiplicity="1" />
+    <End Role="Receipt" Type="Self.Receipt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Model_clothes">
+        <PropertyRef Name="id_model" />
+      </Principal>
+      <Dependent Role="Receipt">
+        <PropertyRef Name="id_model" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Type_product_Category_product">
+    <End Role="Category_product" Type="Self.Category_product" Multiplicity="1" />
+    <End Role="Type_product" Type="Self.Type_product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category_product">
+        <PropertyRef Name="id_category" />
+      </Principal>
+      <Dependent Role="Type_product">
+        <PropertyRef Name="id_category" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище FactoryModelContainer">
+    <EntitySet Name="Category_product" EntityType="Self.Category_product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Model_clothes" EntityType="Self.Model_clothes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Receipt" EntityType="Self.Receipt" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Type_product" EntityType="Self.Type_product" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Model_clothes_Type_product" Association="Self.FK_Model_clothes_Type_product">
+      <End Role="Type_product" EntitySet="Type_product" />
+      <End Role="Model_clothes" EntitySet="Model_clothes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Receipt_Employee" Association="Self.FK_Receipt_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Receipt" EntitySet="Receipt" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Receipt_Model_clothes" Association="Self.FK_Receipt_Model_clothes">
+      <End Role="Model_clothes" EntitySet="Model_clothes" />
+      <End Role="Receipt" EntitySet="Receipt" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Type_product_Category_product" Association="Self.FK_Type_product_Category_product">
+      <End Role="Category_product" EntitySet="Category_product" />
+      <End Role="Type_product" EntitySet="Type_product" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

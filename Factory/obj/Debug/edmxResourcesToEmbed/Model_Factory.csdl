@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FactoryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Category_product">
+    <Key>
+      <PropertyRef Name="id_category" />
+    </Key>
+    <Property Name="id_category" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name_category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Type_product" Relationship="Self.FK_Type_product_Category_product" FromRole="Category_product" ToRole="Type_product" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="id_employee" />
+    </Key>
+    <Property Name="id_employee" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="surname_employee" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="name_employee" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="patronymic_employee" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="date_birthday" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="number_phone" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="login_user" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="password_user" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="post" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="image_" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <NavigationProperty Name="Receipt" Relationship="FactoryModel.FK_Receipt_Employee" FromRole="Employee" ToRole="Receipt" />
+  </EntityType>
+  <EntityType Name="Model_clothes">
+    <Key>
+      <PropertyRef Name="id_model" />
+    </Key>
+    <Property Name="id_model" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_product" Type="Int32" Nullable="false" />
+    <Property Name="name_model" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="price_model" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Type_product" Relationship="Self.FK_Model_clothes_Type_product" FromRole="Model_clothes" ToRole="Type_product" />
+    <NavigationProperty Name="Receipt" Relationship="Self.FK_Receipt_Model_clothes" FromRole="Model_clothes" ToRole="Receipt" />
+  </EntityType>
+  <EntityType Name="Receipt">
+    <Key>
+      <PropertyRef Name="id_receipt" />
+    </Key>
+    <Property Name="id_receipt" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_model" Type="Int32" Nullable="false" />
+    <Property Name="id_employee" Type="Int32" Nullable="false" />
+    <Property Name="date_receipt" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="amount" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Model_clothes" Relationship="Self.FK_Receipt_Model_clothes" FromRole="Receipt" ToRole="Model_clothes" />
+    <NavigationProperty Name="Employee" Relationship="FactoryModel.FK_Receipt_Employee" FromRole="Receipt" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Type_product">
+    <Key>
+      <PropertyRef Name="id_product" />
+    </Key>
+    <Property Name="id_product" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_category" Type="Int32" Nullable="false" />
+    <Property Name="name_product" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Category_product" Relationship="Self.FK_Type_product_Category_product" FromRole="Type_product" ToRole="Category_product" />
+    <NavigationProperty Name="Model_clothes" Relationship="Self.FK_Model_clothes_Type_product" FromRole="Type_product" ToRole="Model_clothes" />
+  </EntityType>
+  <Association Name="FK_Type_product_Category_product">
+    <End Role="Category_product" Type="Self.Category_product" Multiplicity="1" />
+    <End Role="Type_product" Type="Self.Type_product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category_product">
+        <PropertyRef Name="id_category" />
+      </Principal>
+      <Dependent Role="Type_product">
+        <PropertyRef Name="id_category" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Model_clothes_Type_product">
+    <End Role="Type_product" Type="Self.Type_product" Multiplicity="1" />
+    <End Role="Model_clothes" Type="Self.Model_clothes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Type_product">
+        <PropertyRef Name="id_product" />
+      </Principal>
+      <Dependent Role="Model_clothes">
+        <PropertyRef Name="id_product" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Receipt_Model_clothes">
+    <End Role="Model_clothes" Type="Self.Model_clothes" Multiplicity="1" />
+    <End Role="Receipt" Type="Self.Receipt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Model_clothes">
+        <PropertyRef Name="id_model" />
+      </Principal>
+      <Dependent Role="Receipt">
+        <PropertyRef Name="id_model" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FactoryEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Category_product" EntityType="Self.Category_product" />
+    <EntitySet Name="Employee" EntityType="Self.Employee" />
+    <EntitySet Name="Model_clothes" EntityType="Self.Model_clothes" />
+    <EntitySet Name="Receipt" EntityType="Self.Receipt" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Type_product" EntityType="Self.Type_product" />
+    <AssociationSet Name="FK_Type_product_Category_product" Association="Self.FK_Type_product_Category_product">
+      <End Role="Category_product" EntitySet="Category_product" />
+      <End Role="Type_product" EntitySet="Type_product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Model_clothes_Type_product" Association="Self.FK_Model_clothes_Type_product">
+      <End Role="Type_product" EntitySet="Type_product" />
+      <End Role="Model_clothes" EntitySet="Model_clothes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Receipt_Model_clothes" Association="Self.FK_Receipt_Model_clothes">
+      <End Role="Model_clothes" EntitySet="Model_clothes" />
+      <End Role="Receipt" EntitySet="Receipt" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Receipt_Employee" Association="FactoryModel.FK_Receipt_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Receipt" EntitySet="Receipt" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="FK_Receipt_Employee">
+    <End Type="FactoryModel.Employee" Role="Employee" Multiplicity="1" />
+    <End Type="FactoryModel.Receipt" Role="Receipt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="id_employee" />
+      </Principal>
+      <Dependent Role="Receipt">
+        <PropertyRef Name="id_employee" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
